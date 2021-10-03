@@ -29,7 +29,7 @@ export default function Lanyard() {
 							<span className="text-white text-xl font-bold">{isGitHub || <Skeleton />}</span>
 							<span className="text-white">{activity?.details?.split('', 35).reduce((o, c) => o.length === 34 ? `${o}${c}...` : `${o}${c}`, '') || <Skeleton />}</span>
 							<span className="text-white">{activity?.state?.split('', 35).reduce((o, c) => o.length === 34 ? `${o}${c}...` : `${o}${c}`, '') || <Skeleton />}</span>
-							<span className="text-white">{activity ? `${`⏰ ${timestamp.fromNow().split('ago')[0]} elapsed`}` : <Skeleton/>}</span>
+							<span className="text-white">⏰ {timestamp.fromNow().split('ago')[0] || "0 minutes"} elapsed</span>
 						</p>
 					</div>
 				</SkeletonTheme>
