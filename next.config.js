@@ -9,7 +9,8 @@ module.exports = {
 	images: {
 		domains: [
 			'cdn.discordapp.com',
-			'i.stack.imgur.com'
+			'i.stack.imgur.com',
+			'discord.com'
 		],
 	},
 };
