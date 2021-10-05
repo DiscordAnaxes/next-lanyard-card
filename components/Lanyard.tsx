@@ -4,6 +4,7 @@ import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import styled from 'styled-components';
 
 export default function Lanyard() {
 	const router = useRouter()
@@ -25,9 +26,7 @@ export default function Lanyard() {
 				<SkeletonTheme color="#111827" highlightColor="#1F2937">
 					<div className="flex items-center">
 						<Image src={activity ? `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.large_image}.png` : "https://i.stack.imgur.com/y9DpT.jpg"} alt={activity?.assets?.large_text || "Placeholder"} className="rounded-md" draggable="false" width="96px" height="96px" />
-						<div style={{ marginLeft: "-22px", marginBottom: "-90px" }}>
-							<Image src={activity?.assets?.small_image ? `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.small_image}.png` : "https://discord.com/assets/3437c10597c1526c3dbd98c737c2bcae.svg"} alt={activity?.assets?.small_text || "Placeholder"} className={activity?.assets?.small_image ? "rounded-full" : ""} draggable="false" width="30px" height="30px" />
-						</div>
+						<ActivitySecondaryImage src={activity?.assets?.small_image ? `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.small_image}.png` : "https://discord.com/assets/3437c10597c1526c3dbd98c737c2bcae.svg"} alt={activity?.assets?.small_text || "Placeholder"} className={activity?.assets?.small_image ? "rounded-full" : ""} draggable="false" width="30px" height="30px" />
 						<p className="ml-4 leading-snug flex flex-col justify-between">
 							<span className="text-white text-xl font-bold">Playing {isGitHub || <Skeleton />}</span>
 							<span className="text-white">{activity?.details?.split('', 35).reduce((o, c) => o.length === 34 ? `${o}${c}...` : `${o}${c}`, '') || <Skeleton />}</span>
@@ -44,3 +43,16 @@ export default function Lanyard() {
 		</div>
 	);
 }
+
+
+
+const ActivitySecondaryImage = styled.img`
+  position: absolute;
+  bottom: 15px;
+  right: 325px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #1F2937;
+  border: 2px solid #1F2937;
+`;
