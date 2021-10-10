@@ -16,10 +16,9 @@ export default function Home() {
 						crossOrigin="anonymous"
 					/>
 				</Head>
+
 				<div className="flex justify-center h-screen">
-					<div className="my-auto lg:ml-5 md:ml-5 sm:ml-5 xs:ml-3 ml-5 ">
-						<Lanyard />
-					</div>
+					<Lanyard />
 				</div>
 			</body>
 		</html>
