@@ -10,7 +10,9 @@ module.exports = {
 		domains: [
 			'cdn.discordapp.com',
 			'i.stack.imgur.com',
-			'discord.com'
+			'discord.com',
+			'i.scdn.co',
+			'cnrad.dev'
 		],
 	},
 };
