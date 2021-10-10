@@ -41,10 +41,10 @@ export default function Lanyard() {
 						</div>
 					</SkeletonTheme>
 				</div>
-				<br />
+				{/* <br />
 				<div className="flex items-center justify-center">
 					<h1 className="text-white font-semibold">Please input a Discord Snowflake id in the url. i.e <span className="focus:outline-none bg-none bg-gray-800 rounded-lg p-3 h-4 w-4">?id=567885938160697377</span></h1>
-				</div>
+				</div> */}
 			</div>
 		</>
 	);
