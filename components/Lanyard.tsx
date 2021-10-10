@@ -53,7 +53,7 @@ export default function Lanyard() {
 
 
 const ActivitySecondaryImage = styled.img`
-  position: absolute;
+  position: fixed;
   bottom: 15px;
   right: 325px;
   width: 30px;
