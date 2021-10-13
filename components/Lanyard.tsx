@@ -21,7 +21,7 @@ export default function Lanyard() {
 
 	const currentDate: any = new Date();
 
-	const isGitHub = activity?.name === 'GitHub' ? <span>Playing{' '}<i className="fab fa-github"></i>{' '}GitHub</span> : activity?.name === "Visual Studio Code" ? <span>Playing{' '}<i className="fad fa-code text-blue-500"></i>{' '}Visual Studio Code</span> : lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <span>Listening to{' '}<i className="fab fa-spotify text-green-500"></i>{' '}Spotify</span> : lanyard?.activities[lanyard?.activities[0] === true && lanyard?.activities[1] === false ? 0 : 1] ? `Playing ${activity?.name}` : <Skeleton />;
+	const isGitHub = activity?.name === 'GitHub' ? <span>Playing{' '}<i className="fab fa-github"></i>{' '}GitHub</span> : activity?.name === "Visual Studio Code" ? <span>Playing{' '}<i className="fad fa-code text-blue-500"></i>{' '}Visual Studio Code</span> : lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <span>Listening to{' '}<i className="fab fa-spotify text-green-500"></i>{' '}Spotify</span> : lanyard?.activities[(lanyard?.activities[0] ?? true)  && (lanyard?.activities[1] ?? false) ? 0 : 1] ? `Playing ${activity?.name}` : <Skeleton />;
 	
 
 	return (
