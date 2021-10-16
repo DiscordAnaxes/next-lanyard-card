@@ -26,7 +26,7 @@ export default function Lanyard() {
 
 	return (
 		<>
-			<div className="my-auto lg:ml-5 md:ml-5 sm:ml-5 xs:ml-3 ml-5 ">
+			<div className="my-auto lg:ml-5 md:ml-5 sm:ml-5 xs:ml-3 ml-5 md:w-auto">
 				<div className="rounded-md h-auto w-96 bg-gray-800 first:p-5 card">
 					<SkeletonTheme color="#111827" highlightColor="#1F2937">
 						<div className="flex items-center">
