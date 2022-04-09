@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "framer-motion": "^4.1.17",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "next": "latest",
     "next-themes": "^0.0.15",
     "react": "^17.0.2",
