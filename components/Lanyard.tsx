@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLanyard } from 'use-lanyard';
 import moment from 'moment';
 import Image from 'next/image';
@@ -6,47 +6,175 @@ import { useRouter } from 'next/router';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import styled from 'styled-components';
 import Progress from '../components/Progress';
+import useSWR from 'swr';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { IoLogoGameControllerB } from "react-icons/io";
+import { BsTvFill } from "react-icons/bs";
 
 export default function Lanyard() {
-	const router = useRouter()
-	const { id } = router.query
+	const [snowflake, setSnowflake] = useState('');
+	const { data: lanyard } = useSWR(snowflake ? `lanyard?id=${snowflake}` : null);
 
-	const DISCORD_ID = id ? id?.toString() : "567885938160697377";
-
-	const { data: lanyard } = useLanyard(DISCORD_ID);
-
-	const activity = lanyard?.activities.find(activity => activity.type === 0);
+	const activity = lanyard?.activities[0]?.type === 4 ? lanyard?.activities[1] : lanyard?.activities[0];
 
 	const timestamp = moment(activity?.timestamps?.start);
 
-	const currentDate: any = new Date();
+	const getActivityTypeText = (activity: { type: number, name: string }) => {
+		switch (activity?.type) {
+			case 0:
+				return `Playing ${activity?.name}`;
+			case 2:
+				return `Listening to ${activity?.name}`;
+			case 3:
+				return `Watching ${activity?.name}`;
+			case 5:
+				return `Competing in ${activity?.name}`;
+			default:
+				return "";
+		}
+	};
 
-	const isGitHub = activity?.name === 'GitHub' ? <span>Playing{' '}<i className="fab fa-github"></i>{' '}GitHub</span> : activity?.name === "Visual Studio Code" ? <span>Playing{' '}<i className="fad fa-code text-blue-500"></i>{' '}Visual Studio Code</span> : lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <span>Listening to{' '}<i className="fab fa-spotify text-green-500"></i>{' '}Spotify</span> : lanyard?.activities[lanyard?.activities[0] && lanyard?.activities[1] ? 0 : 1] ? `Playing ${activity?.name}` : <Skeleton />;
-	
+	const getActivityTypeIcon = (activity: { type: number }) => {
+		switch (activity?.type) {
+			case 0:
+				return <IoLogoGameControllerB className="inline" />;
+			case 3:
+				return <BsTvFill className="inline" />;
+			default:
+				return null;
+		}
+	};
+
+	const handleInputChange = (e: { target: { value: string; }; }) => {
+		const value = e.target.value;
+		if (/^\d{0,19}$/.test(value)) {
+			setSnowflake(value);
+		}
+	};
+
+	const [currentDate, setCurrentDate] = useState(Date.now());
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentDate(Date.now());
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
+
+	const formatTime = (timestamp: number) => {
+		const minutes = Math.floor(timestamp / 60000);
+		const seconds = Math.floor((timestamp % 60000) / 1000).toString().padStart(2, '0');
+		return `${minutes}:${seconds}`;
+	};
+
+	const formatElapsedTime = (timestamp: number) => {
+		const hours = Math.floor(timestamp / 3600000);
+		const minutes = Math.floor((timestamp % 3600000) / 60000).toString().padStart(2, '0');
+		const seconds = Math.floor((timestamp % 60000) / 1000).toString().padStart(2, '0');
+		return `${hours}:${minutes}:${seconds}`;
+	};
 
 	return (
-		<>
-			<div className="my-auto lg:ml-5 md:ml-5 sm:ml-5 xs:ml-3 ml-5 md:w-auto">
-				<div className="rounded-md h-auto w-96 bg-gray-800 first:p-5 card">
-					<SkeletonTheme color="#111827" highlightColor="#1F2937">
-						<div className="flex items-center">
-							<Image src={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? `${lanyard?.spotify.album_art_url}` : lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 0 || null ? `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.large_image}.png` : "https://i.stack.imgur.com/y9DpT.jpg"} alt={activity?.assets?.large_text || "Placeholder"} className="rounded-md" draggable="false" width="96px" height="96px" />
-							{activity?.assets?.small_image || lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <ActivitySecondaryImage src={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? "https://cnrad.dev/assets/spotify-logo.svg" : `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.small_image}.png`} alt={activity?.assets?.small_text || "Placeholder"} className={activity?.assets?.small_image ? "rounded-full" : ""} draggable="false" width="30px" height="30px" /> : ""}
-							<p className="ml-4 leading-snug flex flex-col justify-between">
-								<span className="text-white text-xl font-bold">{isGitHub}</span>
-								<span className="text-white"><a className={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? "hover:text-green-500" : ""} href={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? `https://open.spotify.com/track/${lanyard?.spotify.track_id}` : ""} target={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? "_blank" : ""}>{lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? `🎶 ${lanyard?.spotify.song.split('', 30).reduce((o, c) => o.length === 29 ? `${o}${c}...` : `${o}${c}`, '')}` : activity?.details?.split('', 35).reduce((o, c) => o.length === 34 ? `${o}${c}...` : `${o}${c}`, '') || <Skeleton />}</a></span>
-								<span className="text-white">{lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? `🍧 ${lanyard?.spotify.artist.split('', 30).reduce((o, c) => o.length === 29 ? `${o}${c}...` : `${o}${c}`, '')}` : activity?.state?.split('', 35).reduce((o, c) => o.length === 34 ? `${o}${c}...` : `${o}${c}`, '') || <Skeleton />}</span>
-								<span className="text-white">{lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <Progress percentage={100 * (currentDate - lanyard?.spotify.timestamps.start) / (lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)} /> : `⏰ ${timestamp.fromNow().split('ago')[0] || "0 minutes"} elapsed`}</span>
-							</p>
-						</div>
-					</SkeletonTheme>
-				</div>
-				{/* <br />
-				<div className="flex items-center justify-center">
-					<h1 className="text-white font-semibold">Please input a Discord Snowflake id in the url. i.e <span className="focus:outline-none bg-none bg-gray-800 rounded-lg p-3 h-4 w-4">?id=567885938160697377</span></h1>
-				</div> */}
+		<div className="w-auto rounded-lg border-2 border-slate-800 p-6 transition duration-300 ease-in-out hover:border-slate-700 md:w-[60%]">
+			<div className="mt-6">
+				<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base">
+					<span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">1</span>
+					<span className="text-left">Enter your <FontAwesomeIcon icon={faDiscord} /> Discord ID <span className="text-slate-600">(You must be in the <Link href="https://discord.gg/lanyard" target="_blank" rel="noopener noreferrer" className="font-bold">🏷️ Lanyard <FontAwesomeIcon icon={faExternalLinkSquareAlt} /></Link> Discord.)</span></span>
+				</h1>
+				<label htmlFor="idinput">
+					<input
+						type="text"
+						id="idinput"
+						title="InputID"
+						value={snowflake}
+						onChange={handleInputChange}
+						placeholder="Enter your 18 or 19 digit snowflake"
+						className="w-full px-4 py-2 my-auto text-sm bg-transparent border rounded-lg peer border-slate-800 focus:outline-none enabled:cursor-auto disabled:cursor-not-allowed disabled:opacity-50 md:text-base"
+					/>
+				</label>
 			</div>
-		</>
+			<div className="mt-6">
+				<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base">
+					<span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">1</span>
+					<span className="text-left">Enter your <FontAwesomeIcon icon={faDiscord} /> Discord ID <span className="text-slate-600">(You must be in the <Link href="https://discord.gg/lanyard" target="_blank" rel="noopener noreferrer" className="font-bold">🏷️ Lanyard <FontAwesomeIcon icon={faExternalLinkSquareAlt} /></Link> Discord.)</span></span>
+				</h1>
+				<label htmlFor="idinput">
+					<input
+						type="text"
+						id="idinput"
+						title="InputID"
+						value={snowflake}
+						onChange={handleInputChange}
+						placeholder="Enter your 18 or 19 digit snowflake"
+						className="w-full px-4 py-2 my-auto text-sm bg-transparent border rounded-lg peer border-slate-800 focus:outline-none enabled:cursor-auto disabled:cursor-not-allowed disabled:opacity-50 md:text-base"
+					/>
+				</label>
+			</div>
+			<div className="mt-6">
+				<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base">
+					<span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">1</span>
+					<span className="text-left">Enter your <FontAwesomeIcon icon={faDiscord} /> Discord ID <span className="text-slate-600">(You must be in the <Link href="https://discord.gg/lanyard" target="_blank" rel="noopener noreferrer" className="font-bold">🏷️ Lanyard <FontAwesomeIcon icon={faExternalLinkSquareAlt} /></Link> Discord.)</span></span>
+				</h1>
+				<label htmlFor="idinput">
+					<input
+						type="text"
+						id="idinput"
+						title="InputID"
+						value={snowflake}
+						onChange={handleInputChange}
+						placeholder="Enter your 18 or 19 digit snowflake"
+						className="w-full px-4 py-2 my-auto text-sm bg-transparent border rounded-lg peer border-slate-800 focus:outline-none enabled:cursor-auto disabled:cursor-not-allowed disabled:opacity-50 md:text-base"
+					/>
+				</label>
+			</div>
+			<div className="mt-6">
+				<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base">
+					<span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">2</span>
+					<p className="text-left">
+						Visualising
+						{lanyard && (
+							<span>
+								<Image src={`https://cdn.discordapp.com/avatars/${lanyard?.discord_user.id}/${lanyard?.discord_user.avatar}?size=512`} height={20} width={20} className="inline-flex w-auto h-5 ml-1 mr-1 rounded-full" draggable={false} alt={`${lanyard?.discord_user.username} PFP`} />
+								{lanyard?.discord_user.display_name}
+							</span>
+						)}
+					</p>
+				</h1>
+				<div className="my-auto">
+					<div className="w-full h-auto bg-transparent border rounded-lg peer border-slate-800 first:p-5 card">
+						<SkeletonTheme baseColor="#111827" highlightColor="#1F2937">
+							<div className="flex items-center">
+								<Image src={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? `${lanyard?.spotify.album_art_url}` : lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 0 || null ? `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.large_image}.png` : "https://i.stack.imgur.com/y9DpT.jpg"} alt={activity?.assets?.large_text || "Placeholder"} className="rounded-md" draggable="false" width={96} height={96} />
+								{activity?.assets?.small_image || lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <ActivitySecondaryImage src={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? "https://cnrad.dev/assets/spotify-logo.svg" : `https://cdn.discordapp.com/app-assets/${activity?.application_id}/${activity?.assets?.small_image}.png`} alt={activity?.assets?.small_text || "Placeholder"} className={activity?.assets?.small_image ? "rounded-full" : ""} draggable="false" width="30px" height="30px" /> : ""}
+								<p className="flex flex-col justify-between ml-4 leading-snug">
+									<span className="text-xl font-bold text-left text-white">{getActivityTypeText(activity)}</span>
+									<span className="text-left text-white">{activity?.details}</span>
+									<span className="text-left text-white">{activity?.state}</span>
+									<span className="text-left text-white">
+										{lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? (
+											<>
+												<Progress percentage={100 * (currentDate - lanyard?.spotify.timestamps.start) / (lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)} />
+												<span className="ml-2">
+													{formatTime(currentDate - lanyard?.spotify.timestamps.start)} / {formatTime(lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)}
+												</span>
+											</>
+										) : (
+											<span className="font-bold text-green-500" >
+												{getActivityTypeIcon(activity)} <span>{formatElapsedTime(currentDate - timestamp.valueOf())}</span>
+											</span>
+										)}
+									</span>
+								</p>
+							</div>
+						</SkeletonTheme>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 }
 
@@ -55,10 +183,10 @@ export default function Lanyard() {
 const ActivitySecondaryImage = styled.img`
   position: fixed;
   bottom: 15px;
-  right: 325px;
+  right: 495px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: #1F2937;
-  border: 2px solid #1F2937;
+  background-color: #232528;
+  border: 2px solid #232528;
 `;

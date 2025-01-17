@@ -1,13 +1,20 @@
 import React from 'react';
-import 'tailwindcss/tailwind.css';
-import { AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import { SWRConfig } from "swr";
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import '../styles/globals.css';
+config.autoAddCss = false
 
-import "../styles/style.css";
-
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<Component {...pageProps} />
-	);
+		<SWRConfig
+			value={{
+				fetcher: (url: string) =>
+					fetch(`/api/${url}`).then((res) => res.json()),
+			}}
+		>
+			<Component {...pageProps} />
+		</SWRConfig>
+	)
 }
-
-export default MyApp;

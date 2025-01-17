@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card {
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.w-96 {
+  width: 28rem;
+}
+
+.font-handwriting {
+    font-family: Permanent Marker;
+}
+
+.highlight {
+    background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-7&color=d7bb87);
+}

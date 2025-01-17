@@ -1,6 +1,6 @@
 {
-  "name": "tailwindcss-example-lanyard-card",
-  "version": "0.0.1",
+  "name": "next-lanyard-card",
+  "version": "2.0.0",
   "author": {
     "name": "DiscordAnaxes",
     "email": "anaxesoce@gmail.com",
@@ -14,23 +14,30 @@
     "start": "next start"
   },
   "dependencies": {
-    "framer-motion": "^4.1.17",
-    "moment": "^2.29.2",
-    "next": "latest",
-    "next-themes": "^0.0.15",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-loading-skeleton": "^2.2.0",
-    "styled-components": "^5.3.1",
-    "swr": "^1.0.1",
-    "use-lanyard": "^1.0.1"
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "framer-motion": "^11.18.0",
+    "moment": "^2.30.1",
+    "next": "15.1.4",
+    "next-themes": "^0.4.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
+    "react-loading-skeleton": "^3.5.0",
+    "styled-components": "^6.1.14",
+    "swr": "^2.3.0",
+    "use-lanyard": "^1.5.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.26",
-    "@types/tailwindcss": "^2.2.1",
-    "autoprefixer": "^10.2.6",
-    "postcss": "^8.3.5",
-    "tailwindcss": "^2.2.4",
-    "typescript": "^4.4.3"
+    "@types/node": "22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/tailwindcss": "^3.1.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
   }
 }

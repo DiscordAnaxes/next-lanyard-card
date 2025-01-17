@@ -1,26 +1,52 @@
-import React from 'react';
-import Lanyard from '../components/Lanyard';
-import Head from 'next/head';
+import React from "react";
+import Lanyard from "../components/Lanyard";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import Head from "next/head";
+import { promises as fs } from 'fs';
+import path from 'path';
+import { FooterProps } from "../types/general";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import { SiNextdotjs, SiSpotify } from "react-icons/si";
 
-export default function Home() {
+export default function Home({ version, environment }: FooterProps) {
 	return (
-		<html lang="en">
-			<body className="bg-gray-900">
-				<Head>
-					<title>Next.js TypeScript Lanyard Card example.</title>
-					<link rel="icon" type="image/png" href="/favicon.ico" />
-					<link
-						rel="stylesheet"
-						href="https://pro.fontawesome.com/releases/v5.14.0/css/all.css"
-						integrity="sha384-VhBcF/php0Z/P5ZxlxaEx1GwqTQVIBu4G4giRWxTKOCjTxsPFETUDdVL5B6vYvOt"
-						crossOrigin="anonymous"
-					/>
-				</Head>
-
-				<div className="flex justify-center h-screen">
+		<div className="flex flex-col items-center justify-center max-w-6xl py-2 mx-auto text-white">
+			<Head>
+				<title>Djenie | Discover the perfect tune.</title>
+			</Head>
+			<Header />
+			<main className="flex flex-col items-center justify-center flex-1 w-full px-4 mt-10 text-center">
+				<Link
+					href="https://twitter.com/DiscordAnaxes/status/1615228710936006656"
+					target="_blank"
+					rel="noreferrer"
+					className="mb-5 rounded-2xl border border-slate-800 bg-transparent py-1 px-4 text-sm text-[#3290EE] transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-200"
+				>
+					<FontAwesomeIcon icon={faTwitter} /> Introducing Djenie
+				</Link>
+				<h1 className="max-w-4xl mx-auto text-5xl font-bold text-white sm:text-5xl">
+					Lanyard visualiser <span className="font-handwriting highlight">optimised</span> for <SiNextdotjs className="inline" />
+				</h1>
+				<div className="flex flex-col items-center justify-between w-full mt-6 mb-10">
 					<Lanyard />
 				</div>
-			</body>
-		</html>
+			</main>
+			<Footer version={version} environment={environment} />
+		</div>
 	);
+};
+
+export async function getStaticProps() {
+	const packageJsonPath = path.join(process.cwd(), 'package.json');
+	const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+	const version = packageJson.version;
+	const environment = process.env.VERCEL_ENV || 'local';
+
+	return {
+		props: { version, environment },
+		revalidate: 3600,
+	};
 }
