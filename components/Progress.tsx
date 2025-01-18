@@ -1,28 +1,14 @@
 import { motion } from "framer-motion";
-import styled from "styled-components";
 
-const Progress = ({percentage}: {percentage: number}) => {
+export default function Progress({ percentage }: { percentage: number }) {
   return (
-    <Container>
-      <ProgressFill initial={false} transition={{ ease: "easeOut", duration: 2 }} animate={{x: `${percentage - 100}%`}} />
-    </Container>
+    <div className="w-full mt-2.5 h-1.5 border border-gray-300 overflow-hidden rounded">
+      <motion.div
+        initial={false}
+        transition={{ ease: "easeOut", duration: 2 }}
+        animate={{ x: `${percentage - 100}%` }}
+        className="w-full h-1.5 bg-white transform -translate-x-full"
+      />
+    </div>
   );
 };
-
-const Container = styled.div`
-  width: 100%;
-  margin-top: 10px;
-  height: 5px;
-  border: 1px solid #ccc;
-  overflow: hidden;
-  border-radius: 5px;
-`;
-
-const ProgressFill = styled(motion.div)`
-  width: 100%;
-  height: 5px;
-  background-color: #fff;
-  transform: translateX(-100%);
-`;
-
-export default Progress;

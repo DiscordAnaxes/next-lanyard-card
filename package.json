@@ -1,6 +1,6 @@
 {
   "name": "next-lanyard-card",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "DiscordAnaxes",
     "email": "anaxesoce@gmail.com",
@@ -26,10 +26,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "react-loading-skeleton": "^3.5.0",
-    "styled-components": "^6.1.14",
-    "swr": "^2.3.0",
-    "use-lanyard": "^1.5.2"
+    "swr": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "22.10.7",

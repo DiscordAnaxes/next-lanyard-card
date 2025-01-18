@@ -18,19 +18,17 @@ export default function Home({ version, environment }: FooterProps) {
 				<title>Djenie | Discover the perfect tune.</title>
 			</Head>
 			<Header />
-			<main className="flex flex-col items-center justify-center flex-1 w-full px-4 mt-10 text-center">
+			<main className="flex flex-col items-center justify-center flex-1 w-full px-4 mt-20 text-center">
 				<Link
-					href="https://twitter.com/DiscordAnaxes/status/1615228710936006656"
-					target="_blank"
-					rel="noreferrer"
+					href="/"
 					className="mb-5 rounded-2xl border border-slate-800 bg-transparent py-1 px-4 text-sm text-[#3290EE] transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-200"
 				>
-					<FontAwesomeIcon icon={faTwitter} /> Introducing Djenie
+					<FontAwesomeIcon icon={faTwitter} /> Re-introducing <SiNextdotjs className="inline" /> Lanyard Card
 				</Link>
 				<h1 className="max-w-4xl mx-auto text-5xl font-bold text-white sm:text-5xl">
 					Lanyard visualiser <span className="font-handwriting highlight">optimised</span> for <SiNextdotjs className="inline" />
 				</h1>
-				<div className="flex flex-col items-center justify-between w-full mt-6 mb-10">
+				<div className="flex flex-col items-center justify-between w-full mt-16 mb-16">
 					<Lanyard />
 				</div>
 			</main>

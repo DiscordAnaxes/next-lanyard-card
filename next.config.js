@@ -1,18 +1,20 @@
 module.exports = {
-	reactStrictMode: true,
-	experimental: {
-		turboMode: true,
-	},
-	future: {
-		strictPostcssConfiguration: true,
-	},
-	images: {
-		domains: [
-			'cdn.discordapp.com',
-			'i.stack.imgur.com',
-			'discord.com',
-			'i.scdn.co',
-			'cnrad.dev'
-		],
-	},
+  reactStrictMode: true,
+  experimental: {
+    turboMode: true,
+  },
+  future: {
+    strictPostcssConfiguration: true,
+  },
+  images: {
+    domains: [
+      "cdn.discordapp.com",
+      "i.stack.imgur.com",
+      "discord.com",
+      "i.scdn.co",
+      "cnrad.dev",
+      "avatars.githubusercontent.com",
+      "raw.githubusercontent.com"
+    ],
+  },
 };
