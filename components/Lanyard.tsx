@@ -229,10 +229,11 @@ export default function Lanyard() {
 								<span className="text-left text-white">
 									{lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? (
 										<>
-											<Progress percentage={100 * (currentDate - lanyard?.spotify.timestamps.start) / (lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)} />
-											<span className="ml-2">
-												{formatTime(currentDate - lanyard?.spotify.timestamps.start)} / {formatTime(lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)}
-											</span>
+											<Progress
+												percentage={100 * (currentDate - lanyard?.spotify.timestamps.start) / (lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)}
+												timeStart={formatTime(currentDate - lanyard?.spotify.timestamps.start)}
+												timeEnd={formatTime(lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)}
+											/>
 										</>
 									) : (
 										<span className="font-bold text-green-500" >
