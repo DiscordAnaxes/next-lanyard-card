@@ -21,6 +21,8 @@ export default function Lanyard() {
 
 	const getActivityTypeText = (activity: { type: number, name: string }) => {
 		switch (activity?.type) {
+			// Case 4 is for custom status.
+			
 			case 0:
 				return `Playing ${activity?.name}`;
 			case 2:
@@ -110,57 +112,6 @@ export default function Lanyard() {
 		return smallImage;
 	};
 
-
-	const handleCopy = () => {
-		const textToCopy = `<div className="my-auto">
-        <div className="w-full h-auto bg-transparent border rounded-lg peer border-slate-800 first:p-5 card">
-            <SkeletonTheme baseColor="#111827" highlightColor="#1F2937">
-                <div className="flex items-center">
-                    <Image
-                        src={
-                            lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2
-                                ? \`\${lanyard?.spotify.album_art_url}\`
-                                : getAvatarUrl(activity)
-                        }
-                        alt={activity?.assets?.large_text || "Placeholder"}
-                        className="rounded-md"
-                        draggable="false"
-                        width={96}
-                        height={96}
-                    />
-                    {activity?.assets?.small_image || lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? <ActivitySecondaryImage src={lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? "https://cnrad.dev/assets/spotify-logo.svg" : \`https://cdn.discordapp.com/app-assets/\${activity?.application_id}/\${activity?.assets?.small_image}.png\`} alt={activity?.assets?.small_text || "Placeholder"} className={activity?.assets?.small_image ? "rounded-full" : ""} draggable="false" width="30px" height="30px" /> : ""}
-                    <p className="flex flex-col justify-between ml-4 leading-snug">
-                        <span className="text-xl font-bold text-left text-white">{getActivityTypeText(activity)}</span>
-                        <span className="text-left text-white">{activity?.details}</span>
-                        <span className="text-left text-white">{activity?.state}</span>
-                        <span className="text-left text-white">
-                            {lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? (
-                                <>
-                                    <Progress percentage={100 * (currentDate - lanyard?.spotify.timestamps.start) / (lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)} />
-                                    <span className="ml-2">
-                                        {formatTime(currentDate - lanyard?.spotify.timestamps.start)} / {formatTime(lanyard?.spotify.timestamps.end - lanyard?.spotify.timestamps.start)}
-                                    </span>
-                                </>
-                            ) : (
-                                <span className="font-bold text-green-500" >
-                                    {getActivityTypeIcon(activity)} <span>{formatElapsedTime(currentDate - timestamp.valueOf())}</span>
-                                </span>
-                            )}
-                        </span>
-                    </p>
-                </div>
-            </SkeletonTheme>
-        </div>
-    </div>`;
-		navigator.clipboard.writeText(textToCopy)
-			.then(() => {
-				console.log('Text copied to clipboard');
-			})
-			.catch(err => {
-				console.error('Failed to copy text: ', err);
-			});
-	};
-
 	return (
 		<div className="w-auto rounded-lg border-2 border-slate-800 p-6 transition duration-300 ease-in-out hover:border-slate-700 md:w-[60%]">
 			<div className="mt-6">
@@ -248,7 +199,11 @@ export default function Lanyard() {
 				<div className="mt-6">
 					<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base"><span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">3</span>Final step <span className="ml-1 text-slate-600">(Uses <SiTailwindcss className="inline" /> Tailwind CSS and react-skeleton-loading.)</span></h1>
 					{/* <button type="submit" onClick={handleCopy} className="relative w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800">Copy <SiNextdotjs className="inline" /> Next.js code</button> */}
-					<Link href={"https://github.com/DiscordAnaxes/next-lanyard-card/blob/master/components/Lanyard.tsx"} target="_blank" rel="noopener noreferrer" className="w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800">Copy <SiNextdotjs className="inline" /> Next.js code</Link>
+					<button disabled={!snowflake}>
+						<Link href={"https://github.com/DiscordAnaxes/next-lanyard-card/blob/master/components/Lanyard.tsx"} target="_blank" rel="noopener noreferrer" className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
+							Copy <SiNextdotjs className="inline" /> Next.js code
+						</Link>
+					</button>
 				</div>
 				<div className="mt-4 text-sm text-center text-slate-600">
 					If you have any better suggestions on how to implement this, please message me on <Link href={"https://discord.com/users/567885938160697377"} target="_blank" rel="noopener noreferrer" className="font-bold">Discord <FontAwesomeIcon icon={faExternalLinkSquareAlt} /></Link>
@@ -257,9 +212,3 @@ export default function Lanyard() {
 		</div>
 	);
 }
-
-// width: 30px;
-// height: 30px;
-// border - radius: 50 %;
-// background - color: #232528;
-// border: 2px solid #232528;
