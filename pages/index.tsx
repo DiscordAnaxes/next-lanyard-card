@@ -13,26 +13,28 @@ import { SiNextdotjs, SiSpotify } from "react-icons/si";
 
 export default function Home({ version, environment }: FooterProps) {
 	return (
-		<div className="flex flex-col items-center justify-center max-w-6xl py-2 mx-auto text-white">
-			<Head>
-				<title>Djenie | Discover the perfect tune.</title>
-			</Head>
-			<Header />
-			<main className="flex flex-col items-center justify-center flex-1 w-full px-4 mt-20 text-center">
-				<Link
-					href="/"
-					className="mb-5 rounded-2xl border border-slate-800 bg-transparent py-1 px-4 text-sm text-[#3290EE] transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-200"
-				>
-					<FontAwesomeIcon icon={faTwitter} /> Re-introducing <SiNextdotjs className="inline" /> Lanyard Card
-				</Link>
-				<h1 className="max-w-4xl mx-auto text-5xl font-bold text-white sm:text-5xl">
-					Lanyard visualiser <span className="font-handwriting highlight">optimised</span> for <SiNextdotjs className="inline" />
-				</h1>
-				<div className="flex flex-col items-center justify-between w-full mt-16 mb-16">
-					<Lanyard />
-				</div>
-			</main>
-			<Footer version={version} environment={environment} />
+		<div className="bg-gradient-to-br from-[#080c13] via-[#0b0f19] to-[#101622]">
+			<div className="flex flex-col items-center justify-center max-w-6xl py-2 mx-auto text-white">
+				<Head>
+					<title>Djenie | Discover the perfect tune.</title>
+				</Head>
+				<Header />
+				<main className="flex flex-col items-center justify-center flex-1 w-full px-4 mt-20 text-center">
+					<Link
+						href="/"
+						className="mb-5 rounded-2xl border border-slate-800 bg-transparent py-1 px-4 text-sm text-[#3290EE] transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-200"
+					>
+						<FontAwesomeIcon icon={faTwitter} /> Re-introducing <SiNextdotjs className="inline" /> Lanyard Card
+					</Link>
+					<h1 className="max-w-4xl mx-auto text-5xl font-bold text-white sm:text-5xl">
+						Lanyard visualiser <span className="font-handwriting highlight">optimised</span> for <SiNextdotjs className="inline" />
+					</h1>
+					<div className="flex flex-col items-center justify-between w-full mt-16 mb-16">
+						<Lanyard />
+					</div>
+				</main>
+				<Footer version={version} environment={environment} />
+			</div>
 		</div>
 	);
 };

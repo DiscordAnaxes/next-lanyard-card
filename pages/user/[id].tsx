@@ -4,9 +4,13 @@ import { IoLogoGameControllerB } from "react-icons/io";
 import { BsTvFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import Progress from "../../components/Progress";
+import { useRouter } from "next/router";
 
 export default function LanyardCard() {
     let slug;
+
+    const router = useRouter();
+    const { theme } = router.query;
 
     if (typeof window !== "undefined") {
         slug = document.location.pathname.split("/")[2];
@@ -105,7 +109,7 @@ export default function LanyardCard() {
     };
 
     return (
-        <div className="w-full h-auto bg-transparent border rounded-lg peer border-slate-800 first:p-5 card">
+        <div className={`w-full mt-2 rounded-lg first:p-5 card bg-transparent`}>
             <div className="flex items-center">
                 <div className="relative">
                     <img
@@ -133,11 +137,11 @@ export default function LanyardCard() {
                         />
                     )}
                 </div>
-                <p className="flex flex-col justify-between ml-4 leading-snug">
-                    <span className="text-xl font-bold text-left text-white">{getActivityTypeText(activity)}</span>
-                    <span className="text-left text-white">{activity?.details}</span>
-                    <span className="text-left text-white">{activity?.state}</span>
-                    <span className="text-left text-white">
+                <p className={`flex flex-col justify-between ml-4 leading-snug ${theme}`}>
+                    <span className="text-xl font-bold text-left">{getActivityTypeText(activity)}</span>
+                    <span className="text-left">{activity?.details}</span>
+                    <span className="text-left">{activity?.state}</span>
+                    <span className="text-left">
                         {lanyard?.listening_to_spotify && lanyard?.activities[lanyard?.activities[1] ? 1 : 0]?.type === 2 ? (
                             <>
                                 <Progress

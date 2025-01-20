@@ -14,6 +14,11 @@ import { SiNextdotjs, SiTailwindcss } from 'react-icons/si';
 export default function Lanyard() {
 	const [snowflake, setSnowflake] = useState('');
 	const { data: lanyard } = useSWR(snowflake ? `lanyard?id=${snowflake}` : null);
+	const [colour, setColour] = useState('text-white');
+
+	const handleColourChange = (e: { target: { value: string; }; }) => {
+		setColour(e.target.value);
+	};
 
 	const handleInputChange = (e: { target: { value: string; }; }) => {
 		const value = e.target.value;
@@ -23,7 +28,7 @@ export default function Lanyard() {
 	};
 
 	const handleCopy = () => {
-		const textToCopy = `<iframe title="Next.js Lanyard Card" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" src="http://localhost:3000/user/${lanyard?.discord_user.id}" width="500" height="139" class="mx-auto rounded-md" />`;
+		const textToCopy = `<iframe title="Next.js Lanyard Card" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" src="https://next-lanyard-card.vercel.app/user/${lanyard?.discord_user.id}?theme=${colour}" className="mx-auto rounded-md" />`;
 		navigator.clipboard.writeText(textToCopy)
 			.then(() => {
 				console.log('Text copied to clipboard');
@@ -55,6 +60,23 @@ export default function Lanyard() {
 			<div className="mt-6">
 				<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base">
 					<span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">2</span>
+					<span className="text-left">Enter text colour <span className="text-slate-600">(You must use <Link href="https://tailwindcss.com/docs/text-color" target="_blank" rel="noopener noreferrer" className="font-bold"><SiTailwindcss className="inline" /> Tailwind CSS colour classes</Link>)</span></span>
+				</h1>
+				<label htmlFor="colourText">
+					<input
+						type="text"
+						id="colourText"
+						title="colourText"
+						value={colour}
+						onChange={handleColourChange}
+						placeholder="Enter text colour using Tailwind CSS"
+						className="w-full px-4 py-2 my-auto text-sm bg-transparent border rounded-lg peer border-slate-800 focus:outline-none enabled:cursor-auto disabled:cursor-not-allowed disabled:opacity-50 md:text-base"
+					/>
+				</label>
+			</div>
+			<div className="mt-6">
+				<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base">
+					<span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">3</span>
 					<p className="text-left">
 						Visualising
 						{lanyard && (
@@ -65,11 +87,16 @@ export default function Lanyard() {
 						)}
 					</p>
 				</h1>
-				<div className="my-auto">
-					<iframe title={`Lanyard visualiser of ${lanyard?.discord_user.display_name}`} sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" src={`/user/${lanyard?.discord_user.id}`} width="500" height="139" className="mx-auto rounded-md" />
+				<div className="">
+					<iframe
+						title="Next.js Lanyard Card"
+						sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+						src={`/user/${snowflake}?theme=${colour}`}
+						className="w-[80%] mx-auto rounded-md border border-slate-800"
+					/>
 				</div>
 				<div className="mt-6">
-					<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base"><span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">3</span>Final step</h1>
+					<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base"><span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">4</span>Final step</h1>
 					<button disabled={!snowflake} onClick={handleCopy} className="mr-2">
 						<span className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
 							Copy <SiNextdotjs className="inline" /> Lanyard Card iFrame
@@ -82,7 +109,7 @@ export default function Lanyard() {
 					</Link>
 				</div>
 				<div className="mt-4 text-sm text-center text-slate-600">
-					If you have any better suggestions on how to implement this, please message me on <Link href={"https://discord.com/users/567885938160697377"} target="_blank" rel="noopener noreferrer" className="font-bold">Discord <FontAwesomeIcon icon={faExternalLinkSquareAlt} /></Link>
+					You will be able to add your own background colours and customise the iFrame.
 				</div>
 			</div>
 		</div>

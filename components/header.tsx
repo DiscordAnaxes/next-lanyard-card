@@ -15,7 +15,7 @@ export default function Header() {
             </Link>
             <div>
                 <Link href={"https://github.com/DiscordAnaxes/next-lanyard-card"} target="_blank" rel="noopener noreferrer" className={`border border-slate-700 relative m-auto rounded-lg p-2 text-lg`}>
-                    <span className="hidden sm:contents ">Open source on</span> <FontAwesomeIcon icon={faGithub} />
+                    <span className="hidden font-semibold sm:contents">Open source on</span> <FontAwesomeIcon icon={faGithub} />
                 </Link>
             </div>
         </header>

@@ -31,7 +31,7 @@ class MyDocument extends Document {
                         content="/sprucify-banner.png"
                     />
                 </Head>
-                <body className="overscroll-none bg-gradient-to-br from-[#080c13] via-[#0b0f19] to-[#101622]">
+                <body className="overscroll-none">
                     <Main />
                     <NextScript />
                 </body>
