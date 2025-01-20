@@ -75,7 +75,7 @@ export default function Lanyard() {
 							Copy <SiNextdotjs className="inline" /> Lanyard Card iFrame
 						</span>
 					</button>
-					<Link href={"https://github.com/DiscordAnaxes/next-lanyard-card/blob/master/pages/user/[id].tsx"} target="_blank" rel="noopener noreferrer">
+					<Link href={"https://github.com/DiscordAnaxes/next-lanyard-card/blob/master/pages/user/%5Bid%5D.tsx"} target="_blank" rel="noopener noreferrer">
 						<span className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
 							View <SiNextdotjs className="inline" /> Source code
 						</span>
