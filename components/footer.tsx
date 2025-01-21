@@ -31,7 +31,7 @@ export default function Footer({ version, environment }: FooterProps) {
                 </span>
                 <p className="mt-4 text-sm border-gray-200 dark:border-[#0F1A27] sm:ml-4 sm:pl-4 sm:border-l sm:py-2 sm:mt-0">
                     © 2021 - {new Date().getFullYear()}
-                    <Link href={"https://anaxes-xyz-react.vercel.app"} target="_blank" rel="noopener noreferrer" className="font-bold">
+                    <Link href={"https://anaxes.vercel.app"} target="_blank" rel="noopener noreferrer" className="font-bold">
                         <Image src={"/anaxes.png"} height={20} width={20} className="inline-flex w-auto h-5 ml-2 mr-1 rounded-full" draggable={false} alt={"Anaxes PFP"} />
                         Anaxes
                     </Link>. All rights reserved.

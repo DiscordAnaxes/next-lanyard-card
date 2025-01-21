@@ -92,22 +92,24 @@ export default function Lanyard() {
 						title="Next.js Lanyard Card"
 						sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
 						src={`/user/${snowflake}?theme=${colour}`}
-						className="w-[80%] mx-auto rounded-md border border-slate-800"
+						className="md:w-[80%] w-full mx-auto rounded-md border border-slate-800"
 					/>
 				</div>
-				<div className="mt-6">
-					<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base"><span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">4</span>Final step</h1>
-					<button disabled={!snowflake} onClick={handleCopy} className="mr-2">
-						<span className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
-							Copy <SiNextdotjs className="inline" /> Lanyard Card iFrame
-						</span>
-					</button>
-					<Link href={"https://github.com/DiscordAnaxes/next-lanyard-card/blob/master/pages/user/%5Bid%5D.tsx"} target="_blank" rel="noopener noreferrer">
-						<span className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
-							View <SiNextdotjs className="inline" /> Source code
-						</span>
-					</Link>
-				</div>
+				{lanyard?.discord_user.id && (
+					<div className="mt-6">
+						<h1 className="flex mb-5 text-sm font-semibold md:text-left md:text-base"><span className="flex items-center justify-center w-6 h-6 p-2 mr-2 rounded-md bg-slate-800 ">4</span>Final step</h1>
+						<button onClick={handleCopy} className="hidden md:contents">
+							<span className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
+								Copy <SiNextdotjs className="inline" /> Lanyard Card iFrame
+							</span>
+						</button>
+						<Link href={"https://github.com/DiscordAnaxes/next-lanyard-card/blob/master/pages/user/%5Bid%5D.tsx"} target="_blank" rel="noopener noreferrer" className="ml-2">
+							<span className={`w-full px-4 py-3 font-semibold bg-transparent border rounded-lg button border-slate-800 ${!snowflake ? 'pointer-events-none opacity-50' : ''}`}>
+								View <SiNextdotjs className="inline" /> Source code
+							</span>
+						</Link>
+					</div>
+				)}
 				<div className="mt-4 text-sm text-center text-slate-600">
 					You will be able to add your own background colours and customise the iFrame.
 				</div>
